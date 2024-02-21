@@ -43,7 +43,7 @@ function Form(props) {
                 />
             </label>
             <div>
-                <input type="submit" value="Sign In" />
+                <input type="submit" value={props.name} />
             </div>
         </form>
     )

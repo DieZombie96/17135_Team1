@@ -4,13 +4,13 @@ function Button(props) {
 
     const handleClick = (event) => {
         event.preventDefault();
-        alert("Create new user popup");
+        alert("Create bfds user popup");
     }
 
 
     return (
         <div>
-            <button type="button" onClick={handleClick}>{props.name}</button>
+            <button type="button" onClick={props.onClick}>{props.name}</button>
         </div>
     )
 }
