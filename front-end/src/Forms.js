@@ -11,10 +11,28 @@ function Form(props) {
         setInputs(values => ({ ...values, [name]: value }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        alert(JSON.stringify(inputs));
+        // alert(JSON.stringify(inputs));
+
+        const requestOptions = {
+            method: "GET"
+        }
+
+
+
+        await fetch("/login/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            //mode: "cors",
+            body: JSON.stringify({ 'username': inputs.username, 'userid': inputs.userid, 'password': inputs.password })
+        })
+
+        await fetch("/credentials/", requestOptions)
+            .then(response => response.json())
+            .then(data => alert(data.response));
     }
+
 
     return (
         <form onSubmit={handleSubmit}>
