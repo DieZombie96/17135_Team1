@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import "./Forms.css"
 
 function Form(props) {
     const [inputs, setInputs] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -30,12 +32,22 @@ function Form(props) {
 
         await fetch("/credentials/", requestOptions)
             .then(response => response.json())
-            .then(data => alert(data.response));
+            .then(authentication);
+    }
+
+    const authentication = (data) => {
+        if (data.response === "Success") {
+            // alert('yes')
+            navigate("/projects")
+        }
+        else {
+            alert(data.response)
+        }
     }
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ marginTop: 300 }}>
             <label>Username:
                 <input
                     type="text"
@@ -63,7 +75,7 @@ function Form(props) {
             <div>
                 <input type="submit" value={props.name} />
             </div>
-        </form>
+        </ form>
     )
 }
 
