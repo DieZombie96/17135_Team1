@@ -1,4 +1,4 @@
-input[type=text], select {
+input.mainpage[type=text], select {
   width: 10%;
   padding: 12px 20px;
   margin: 8px 10px;

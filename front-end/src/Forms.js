@@ -50,6 +50,7 @@ function Form(props) {
         <form onSubmit={handleSubmit} style={{ marginTop: 300 }}>
             <label>Username:
                 <input
+                    class="mainpage"
                     type="text"
                     name="username"
                     value={inputs.username || ""}
@@ -58,6 +59,7 @@ function Form(props) {
             </label>
             <label>Userid:
                 <input
+                    class="mainpage"
                     type="text"
                     name="userid"
                     value={inputs.userid || ""}
@@ -66,6 +68,7 @@ function Form(props) {
             </label>
             <label>Password:
                 <input
+                    class="mainpage"
                     type="text"
                     name="password"
                     value={inputs.password || ""}
