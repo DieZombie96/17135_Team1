@@ -28,6 +28,15 @@
   color: #61dafb;
 }
 
+.App-header{
+  background-color: #eff4ff;
+  min-height:97.2vh;
+  font-size: calc(30px + 2vmin);
+  text-align: center;
+  padding-top: 18px;
+  color: rgb(0,0,0);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
