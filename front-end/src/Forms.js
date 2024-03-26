@@ -38,7 +38,8 @@ function Form(props) {
     const authentication = (data) => {
         if (data.response === "Success") {
             // alert('yes')
-            navigate("/projects")
+            // navigate("/projects") 
+            navigate("/join")
         }
         else {
             alert(data.response)
