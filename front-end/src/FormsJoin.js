@@ -43,6 +43,10 @@ function FormsJoin(props) {
         }
     }
 
+    const viewProjects = () => {
+        navigate("/projects");
+    }
+
 
     return (
         <form onSubmit={joinButton} style={{ marginTop: 300 }}>
@@ -59,7 +63,10 @@ function FormsJoin(props) {
                 />
             </label>
             <div>
-                <input type="submit" value={props.name} />
+                <input type="submit" value="Join" />
+            </div>
+            <div>
+                <button type="button" onClick={viewProjects}>View All Projects</button>
             </div>
         </ form>
     )
