@@ -6,14 +6,14 @@ function FormsJoin(props) {
     const [inputs, setInputs] = useState({});
     const navigate = useNavigate();
 
-    const handleChange = (event) => {
+    const handleChange = (event) => { //textbox change
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({ ...values, [name]: value }))
 
     }
 
-    const joinButton = async (event) => {
+    const joinButton = async (event) => { //join button
         event.preventDefault();
         // alert(JSON.stringify(inputs));
 
@@ -46,6 +46,9 @@ function FormsJoin(props) {
 
     return (
         <form onSubmit={joinButton} style={{ marginTop: 300 }}>
+            <div>
+                 <header ><b>Join Project</b> </header>
+            </div>
             <label>ProjectId:
                 <input
                     class="mainpage"

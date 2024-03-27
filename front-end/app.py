@@ -12,6 +12,7 @@ myclient = pymongo.MongoClient("mongodb+srv://ktvu2002:12345@cluster0.yjoiobi.mo
 
 db = myclient.swelab
 users = db.users
+projects=db.projects
 
 @app.route("/", methods=["GET"])
 def index():
@@ -33,11 +34,7 @@ def getter_login():
 @app.route("/credentials/", methods=["GET"])
 def lastName():
     print('GET request working')
-    nameList = {"admin": "password"}
-    returnValue = ""
-
-    print('GET request working')
- #   nameList = {"admin": "password"}
+   # nameList = {"admin": "password"}
     returnValue = ""
     user = users.find_one({'username': username, 'password': password})
     if user:
@@ -45,13 +42,31 @@ def lastName():
     else:
         returnValue = "Invalid username or password"
 
-    # for usernames in nameList:
-    #     if (username == usernames):
-    #         returnValue = "Success"
-    #     else:
-    #         returnValue = "Invalid username or password"
     print(returnValue)
     return json.dumps({'response':returnValue})
+
+@app.route("/join/", methods=["POST"])
+def join():
+
+    data = request.json
+    global pid
+    pid = data['projectId']
+    print(pid)
+    return '1'
+
+@app.route("/checkProjectId/", methods=["GET"])
+def checkProjectId():
+    returnValue = ""
+    print(pid)
+    project = projects.find_one({'projectid': pid})
+    if project:
+        returnValue = "Success"
+    else:
+        returnValue = "Not created yet"
+
+    print(returnValue)
+    return json.dumps({'response':returnValue})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=5000)
