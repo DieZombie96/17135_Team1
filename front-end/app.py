@@ -61,11 +61,23 @@ def checkProjectId():
     project = projects.find_one({'projectid': pid})
     if project:
         returnValue = "Success"
+        users.update_one({'username': username}, { "$push": {'resources': pid}})
     else:
         returnValue = "Not created yet"
 
     print(returnValue)
     return json.dumps({'response':returnValue})
+
+
+@app.route("/getprojects/", methods=["GET"])
+def getProject():
+    returnValue = ""
+    print(username)
+    projects = users.find_one({'username':username},
+                             {'resources': 1})['resources']
+
+    print(projects)
+    return json.dumps({'response':projects})
 
 
 if __name__ == '__main__':
