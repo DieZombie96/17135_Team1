@@ -23,9 +23,9 @@ function Login() {
         return (
             <div >
                 <Form name="Sign In" />
-                <div style={{ margin: 10 }}>
+                {/* <div style={{ margin: 10 }}>
                     <Button name="New User" onClick={handleClick} />
-                </div>
+                </div> */}
             </div>
         )
     }

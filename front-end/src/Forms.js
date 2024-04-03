@@ -13,7 +13,7 @@ function Form(props) {
         setInputs(values => ({ ...values, [name]: value }))
     }
 
-    const handleSubmit = async (event) => {
+    const newUser = async (event) => {
         event.preventDefault();
         // alert(JSON.stringify(inputs));
 
@@ -21,6 +21,37 @@ function Form(props) {
             method: "GET"
         }
 
+        await fetch("/login/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            //mode: "cors",
+            body: JSON.stringify({ 'username': inputs.username, 'userid': inputs.userid, 'password': inputs.password })
+        })
+
+        await fetch("/createAccount/", requestOptions)
+        .then(response => response.json())
+        .then(createAuthentication);
+    }
+    
+    const createAuthentication = (data) => {
+        if (data.response === "Success") {
+           
+            // navigate("/projects") 
+            navigate("/join")
+        }
+        else {
+            alert(data.response)
+        }
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // alert(JSON.stringify(inputs));
+
+        const requestOptions = {
+            method: "GET"
+        }
+    
 
 
         await fetch("/login/", {
@@ -78,6 +109,9 @@ function Form(props) {
             </label>
             <div>
                 <input type="submit" value={props.name} />
+            </div>
+            <div>
+                <button type="button" onClick={newUser}>Create Account</button>
             </div>
         </ form>
     )

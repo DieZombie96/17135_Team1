@@ -68,6 +68,22 @@ def checkProjectId():
     print(returnValue)
     return json.dumps({'response':returnValue})
 
+@app.route("/createAccount/", methods=["GET"])
+def createAccount():
+ 
+    returnValue = ""
+    user = users.find_one({'username': username})
+    if user:
+        returnValue = "Username already exists"
+    else:    
+       new={"username": username, "password": password, "resources":[]}
+       users.insert_one(new)
+       returnValue = "Success"
+
+    print(returnValue)
+    return json.dumps({'response':returnValue})
+
+
 
 @app.route("/getprojects/", methods=["GET"])
 def getProject():
