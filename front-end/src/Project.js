@@ -9,15 +9,15 @@ class Project extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            joinedColor: '#F4FAFC',
-            joinedText: 'join',
-            hardware1quant: this.props.project_quantity,
-            hardware2quant: this.props.project_quantity,
-            hardware1cap: this.props.project_quantity,
-            hardware2cap: this.props.project_quantity,
+            joinedColor: '#C3FFBA',
+            joinedText: 'leave',
+            hardware1quant: this.props.project_quantity1,
+            hardware2quant: this.props.project_quantity2,
+            hardware1cap: this.props.project_capacity1,
+            hardware2cap: this.props.project_capacity2,
             hardware1input: 0,
             hardware2input: 0,
-            operationsdisabled: true
+            operationsdisabled: false
         }
     }
 
@@ -39,20 +39,6 @@ class Project extends React.Component {
         console.log("changed");
     }
 
-
-
-    renderUsers() {
-        var str = "";
-        for (var i = 0; i < this.props.project_users.length; i++) {
-            if (i === 0) {
-                str += this.props.project_users[i];
-                continue;
-            }
-            str += ", " + this.props.project_users[i];
-        }
-        return str;
-    }
-
     hardware1update = (event) => {
         this.setState({ hardware1input: event.target.value });
     }
@@ -62,45 +48,45 @@ class Project extends React.Component {
     }
 
     hardware1in() {
-        var quant = parseInt(this.state.hardware1quant, 10);
         var input = parseInt(this.state.hardware1input, 10);
-        const result = quant + input;
-        if (result >= this.state.hardware1cap) {
-            this.setState({ hardware1quant: this.state.hardware1cap });
-        }
-        else if (result < this.state.hardware1cap) {
-            this.setState({ hardware1quant: result });
-        }
+        var fetchURL = "http://localhost:5000/checkin/" + this.props.project_id + "/" + input + "/" + 1;
+        fetch(fetchURL)
+        .then(response => response.json())
+        .then(this.props.refresh)
+        .catch(error => {
+            console.log("error");
+        });
     }
 
     hardware1out() {
-        if ((this.state.hardware1quant - this.state.hardware1input) <= 0) {
-            this.setState({ hardware1quant: 0 });
-        }
-        else if ((this.state.hardware1quant - this.state.hardware1input) > 0) {
-            this.setState({ hardware1quant: this.state.hardware1quant - this.state.hardware1input });
-        }
+        var fetchURL = "http://localhost:5000/checkout/" + this.props.project_id + "/" + this.state.hardware1input + "/" + 1;
+        fetch(fetchURL)
+        .then(response => response.json())
+        .then(this.props.refresh)
+        .catch(error => {
+            console.log("error");
+        });
     }
 
     hardware2in() {
-        var quant = parseInt(this.state.hardware2quant, 10);
         var input = parseInt(this.state.hardware2input, 10);
-        const result = quant + input;
-        if (result >= this.state.hardware2cap) {
-            this.setState({ hardware2quant: this.state.hardware2cap });
-        }
-        else if (result < this.state.hardware1cap) {
-            this.setState({ hardware2quant: result });
-        }
+        var fetchURL = "http://localhost:5000/checkin/" + this.props.project_id + "/" + input + "/" + 2;
+        fetch(fetchURL)
+        .then(response => response.json())
+        .then(this.props.refresh)
+        .catch(error => {
+            console.log("error");
+        });
     }
 
     hardware2out() {
-        if ((this.state.hardware2quant - this.state.hardware2input) <= 0) {
-            this.setState({ hardware2quant: 0 });
-        }
-        else if ((this.state.hardware2quant - this.state.hardware2input) > 0) {
-            this.setState({ hardware2quant: this.state.hardware2quant - this.state.hardware2input });
-        }
+        var fetchURL = "http://localhost:5000/checkout/" + this.props.project_id + "/" + this.state.hardware2input + "/" + 2;
+        fetch(fetchURL)
+        .then(response => response.json())
+        .then(this.props.refresh)
+        .catch(error => {
+            console.log("error");
+        });
     }
 
     render() {
@@ -109,9 +95,6 @@ class Project extends React.Component {
                 <Box width={1270} height={0} borderRadius={2} component="section" sx={{ p: 10, border: '3px solid black', bgcolor: this.state.joinedColor }}>
                     <Box textAlign="left">
                         <div className="name"><name><b>{this.props.project_name}</b></name></div>
-                    </Box>
-                    <Box className="users">
-                        <div className="users"><name>{this.renderUsers()}</name></div>
                     </Box>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
