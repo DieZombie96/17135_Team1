@@ -39,7 +39,7 @@ function Projects() {
     // }, [])
 
     const rerender = () => {
-        console.log("rerendering")
+        console.log("rerendering");
     };
 
     const getprojects = (data) => {

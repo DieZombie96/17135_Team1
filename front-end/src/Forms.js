@@ -94,7 +94,7 @@ function Form(props) {
             <label>Password:
                 <input
                     class="mainpage"
-                    type="text"
+                    type="password"
                     name="password"
                     value={inputs.password || ""}
                     onChange={handleChange}

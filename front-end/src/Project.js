@@ -9,8 +9,8 @@ class Project extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            joinedColor: '#C3FFBA',
-            joinedText: 'leave',
+             joinedColor: '#F4FAFC',
+            // joinedText: 'leave',
             hardware1quant: this.props.project_quantity1,
             hardware2quant: this.props.project_quantity2,
             hardware1cap: this.props.project_capacity1,
@@ -21,23 +21,23 @@ class Project extends React.Component {
         }
     }
 
-    joinedClicked() {
-        if (this.state.joinedColor === "#F4FAFC") {
-            this.setState({ joinedColor: '#C3FFBA' });
-        }
-        else if (this.state.joinedColor === "#C3FFBA") {
-            this.setState({ joinedColor: '#F4FAFC' });
-        }
-        if (this.state.joinedText === "join") {
-            this.setState({ joinedText: 'leave' });
-            this.setState({ operationsdisabled: false });
-        }
-        else if (this.state.joinedText === 'leave') {
-            this.setState({ joinedText: 'join' });
-            this.setState({ operationsdisabled: true });
-        }
-        console.log("changed");
-    }
+    // joinedClicked() {
+    //     if (this.state.joinedColor === "#F4FAFC") {
+    //         this.setState({ joinedColor: '#C3FFBA' });
+    //     }
+    //     else if (this.state.joinedColor === "#C3FFBA") {
+    //         this.setState({ joinedColor: '#F4FAFC' });
+    //     }
+    //     if (this.state.joinedText === "join") {
+    //         this.setState({ joinedText: 'leave' });
+    //         this.setState({ operationsdisabled: false });
+    //     }
+    //     else if (this.state.joinedText === 'leave') {
+    //         this.setState({ joinedText: 'join' });
+    //         this.setState({ operationsdisabled: true });
+    //     }
+    //     console.log("changed");
+    // }
 
     hardware1update = (event) => {
         this.setState({ hardware1input: event.target.value });
@@ -157,9 +157,6 @@ class Project extends React.Component {
                                 <CustomButton disabled={this.state.operationsdisabled} clicked={this.hardware2out.bind(this)} width={125} fontsize={14} name="Check Out"></CustomButton>
                             </Box>
                         </div>
-                        <Box className="joinbutton">
-                            <CustomButton disabled={false} clicked={this.joinedClicked.bind(this)} height={50} width={95} fontsize={25} name={this.state.joinedText}></CustomButton>
-                        </Box>
                     </div>
                 </Box>
             </div>

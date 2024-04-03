@@ -15,6 +15,43 @@ users = db.users
 projects=db.projects
 hardware = db.hardware
 
+def encrypt(inputText, N, D):
+    N = N*D
+    reversed = inputText[::-1]
+    print(reversed)
+    encrypted = ""
+    index = 0
+    for x in reversed:
+        match x:
+            case ' ':
+                encrypted += ' '
+            case '!':
+                encrypted += '!'
+            case _:
+                if D == 1:
+                    x = chr((ord(x) + N - 34) % 93 + 34)
+                    encrypted += x   
+                elif D == -1:
+                    x = chr((ord(x) + N - 34) % 93 + 34)
+                    encrypted += x      
+    return encrypted
+
+def decrypt(inputText, N, D):
+    N = N*-D
+    reversed = inputText[::-1]
+    decrypted = ""
+    for x in reversed:
+        match x:
+            case ' ':
+                decrypted += ' '
+            case '!':
+                decrypted += '!'
+            case _:
+                
+                x = chr(ord(x) + N)
+                decrypted += x  
+    return decrypted
+
 @app.route("/", methods=["GET"])
 def index():
     return send_from_directory(app.static_folder, "index.html")
@@ -37,8 +74,8 @@ def lastName():
     print('GET request working')
    # nameList = {"admin": "password"}
     returnValue = ""
-    user = users.find_one({'username': username, 'password': password})
-    if user:
+    user = users.find_one({'username': username})
+    if user and (password == decrypt(user['password'], 3, 1)):
         returnValue = "Success"
     else:
         returnValue = "Invalid username or password"
@@ -58,7 +95,7 @@ def join():
 def checkProjectId():
     returnValue = ""
     print(pid)
-    user = users.find_one({'username': username, 'password': password})
+    user = users.find_one({'username': username})
     
     project = projects.find_one({'projectid': pid})
     if project:
@@ -81,7 +118,7 @@ def createAccount():
     if user:
         returnValue = "Username already exists"
     else:    
-       new={"username": username, "password": password, "resources":[]}
+       new={"username": username, "password": encrypt(password, 3, 1), "resources":[]}
        users.insert_one(new)
        returnValue = "Success"
 
