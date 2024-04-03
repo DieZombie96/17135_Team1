@@ -9,8 +9,8 @@ class Project extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-             joinedColor: '#F4FAFC',
-            // joinedText: 'leave',
+            joinedColor: '#C3FFBA',
+            joinedText: 'leave',
             hardware1quant: this.props.project_quantity1,
             hardware2quant: this.props.project_quantity2,
             hardware1cap: this.props.project_capacity1,
@@ -20,24 +20,6 @@ class Project extends React.Component {
             operationsdisabled: false
         }
     }
-
-    // joinedClicked() {
-    //     if (this.state.joinedColor === "#F4FAFC") {
-    //         this.setState({ joinedColor: '#C3FFBA' });
-    //     }
-    //     else if (this.state.joinedColor === "#C3FFBA") {
-    //         this.setState({ joinedColor: '#F4FAFC' });
-    //     }
-    //     if (this.state.joinedText === "join") {
-    //         this.setState({ joinedText: 'leave' });
-    //         this.setState({ operationsdisabled: false });
-    //     }
-    //     else if (this.state.joinedText === 'leave') {
-    //         this.setState({ joinedText: 'join' });
-    //         this.setState({ operationsdisabled: true });
-    //     }
-    //     console.log("changed");
-    // }
 
     hardware1update = (event) => {
         this.setState({ hardware1input: event.target.value });
