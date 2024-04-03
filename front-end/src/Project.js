@@ -49,20 +49,34 @@ class Project extends React.Component {
 
     hardware1in() {
         var input = parseInt(this.state.hardware1input, 10);
+        if(input <= 0){
+            alert("Please enter a valid quantity");
+            return;
+        }
         var fetchURL = "http://localhost:5000/checkin/" + this.props.project_id + "/" + input + "/" + 1;
         fetch(fetchURL)
         .then(response => response.json())
-        .then(this.props.refresh)
+        .then(data => {
+            alert(data.checkedin + " hardware sets checked in!")
+            this.props.refresh();
+        })
         .catch(error => {
             console.log("error");
         });
     }
 
     hardware1out() {
+        if(this.state.hardware1input <= 0){
+            alert("Please enter a valid quantity");
+            return;
+        }
         var fetchURL = "http://localhost:5000/checkout/" + this.props.project_id + "/" + this.state.hardware1input + "/" + 1;
         fetch(fetchURL)
         .then(response => response.json())
-        .then(this.props.refresh)
+        .then(data => {
+            alert(data.checkedout + " hardware sets checked out!")
+            this.props.refresh();
+        })
         .catch(error => {
             console.log("error");
         });
@@ -70,20 +84,34 @@ class Project extends React.Component {
 
     hardware2in() {
         var input = parseInt(this.state.hardware2input, 10);
+        if(input <= 0){
+            alert("Please enter a valid quantity");
+            return;
+        }
         var fetchURL = "http://localhost:5000/checkin/" + this.props.project_id + "/" + input + "/" + 2;
         fetch(fetchURL)
         .then(response => response.json())
-        .then(this.props.refresh)
+        .then(data => {
+            alert(data.checkedin + " hardware sets checked in!")
+            this.props.refresh();
+        })
         .catch(error => {
             console.log("error");
         });
     }
 
     hardware2out() {
+        if(this.state.hardware2input <= 0){
+            alert("Please enter a valid quantity");
+            return;
+        }
         var fetchURL = "http://localhost:5000/checkout/" + this.props.project_id + "/" + this.state.hardware2input + "/" + 2;
         fetch(fetchURL)
         .then(response => response.json())
-        .then(this.props.refresh)
+        .then(data => {
+            alert(data.checkedout + " hardware sets checked out!")
+            this.props.refresh();
+        })
         .catch(error => {
             console.log("error");
         });
