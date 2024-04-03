@@ -73,8 +73,6 @@ def checkProjectId():
 def getProject():
     projects = users.find_one({'username':username},
                              {'resources': 1})['resources']
-
-    return json.dumps({'response':projects})
     query = {}  # Empty query to retrieve all documents
     projection = {"quantity": 1}  # Include only the "Availability" field
     result = hardware.find(query, projection)
