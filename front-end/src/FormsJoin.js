@@ -34,13 +34,7 @@ function FormsJoin(props) {
     }
 
     const authentication = (data) => {  //checks if user is already in it, if it doesnt exist, makes a new one
-        if (data.response === "Success") {
-            // alert('yes')
-            navigate("/projects")
-        }
-        else {
-            alert(data.response)
-        }
+        alert(data.response)
     }
 
     const viewProjects = () => {

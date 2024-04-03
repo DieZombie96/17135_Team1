@@ -34,14 +34,7 @@ function Form(props) {
     }
     
     const createAuthentication = (data) => {
-        if (data.response === "Success") {
-           
-            // navigate("/projects") 
-            navigate("/join")
-        }
-        else {
-            alert(data.response)
-        }
+        alert(data.response)
     }
 
     const handleSubmit = async (event) => {

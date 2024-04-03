@@ -58,12 +58,17 @@ def join():
 def checkProjectId():
     returnValue = ""
     print(pid)
+    user = users.find_one({'username': username, 'password': password})
+    
     project = projects.find_one({'projectid': pid})
     if project:
         returnValue = "Success"
-        users.update_one({'username': username}, { "$push": {'resources': pid}})
+        if pid in user['resources']:
+            returnValue = "Already joined"
+        else:
+            users.update_one({'username': username}, { "$push": {'resources': pid}})
     else:
-        returnValue = "Not created yet"
+        returnValue = "Project does not exist"
 
     print(returnValue)
     return json.dumps({'response':returnValue})
