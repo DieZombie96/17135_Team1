@@ -21,7 +21,7 @@ function Form(props) {
             method: "GET"
         }
 
-        await fetch("/login/", {
+        await fetch("/login2/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             //mode: "cors",

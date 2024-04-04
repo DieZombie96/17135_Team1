@@ -63,8 +63,27 @@ def getter_login():
     global username
     global userid
     global password
+    username=''
+    userid=''
+    password=''
+    #username = data['username']
+    userid = data['userid']
+    password = data['password']
+    print(username, password)
+    return '1'
+
+@app.route("/login2/", methods=["POST"])
+def getter_login2():
+    print('post request working')
+    data = request.json
+    global username
+    global userid
+    global password
+    username=''
+    userid=''
+    password=''
     username = data['username']
-    # userid = data['userid']
+    userid = data['userid']
     password = data['password']
     print(username, password)
     return '1'
@@ -91,11 +110,11 @@ def lastName():
     print('GET request working')
    # nameList = {"admin": "password"}
     returnValue = ""
-    user = users.find_one({'username': username})
+    user = users.find_one({'userid': userid})
     if user and (password == decrypt(user['password'], 3, 1)):
         returnValue = "Success"
     else:
-        returnValue = "Invalid username or password"
+        returnValue = "Invalid userid or password"
 
     print(returnValue)
     return json.dumps({'response':returnValue})
@@ -112,7 +131,7 @@ def join():
 def checkProjectId():
     returnValue = ""
     print(pid)
-    user = users.find_one({'username': username})
+    user = users.find_one({'userid': userid})
     
     project = projects.find_one({'projectid': pid})
     if project:
@@ -120,7 +139,7 @@ def checkProjectId():
         if pid in user['resources']:
             returnValue = "Already joined"
         else:
-            users.update_one({'username': username}, { "$push": {'resources': pid}})
+            users.update_one({'userid': userid}, { "$push": {'resources': pid}})
     else:
         returnValue = "Project does not exist"
 
@@ -131,13 +150,16 @@ def checkProjectId():
 def createAccount():
  
     returnValue = ""
-    user = users.find_one({'username': username})
-    if user:
-        returnValue = "Username already exists"
-    else:    
-       new={"username": username, "password": encrypt(password, 3, 1), "resources":[]}
-       users.insert_one(new)
-       returnValue = "Success"
+    if username=="" or userid=="" or password=="":
+        returnValue="Please enter all fields"
+    else:
+       user = users.find_one({'userid': userid})
+       if user:
+         returnValue = "Userid already exists"
+       else:    
+         new={"userid": userid,"username": username, "password": encrypt(password, 3, 1), "resources":[]}
+         users.insert_one(new)
+         returnValue = "Success"
 
     print(returnValue)
     return json.dumps({'response':returnValue})
@@ -146,7 +168,7 @@ def createAccount():
 
 @app.route("/getprojects/", methods=["GET"])
 def getProject():
-    projects = users.find_one({'username':username},
+    projects = users.find_one({'userid':userid},
                              {'resources': 1})['resources']
     query = {}  # Empty query to retrieve all documents
     projection = {"quantity": 1}  # Include only the "Availability" field
