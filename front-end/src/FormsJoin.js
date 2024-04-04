@@ -41,6 +41,29 @@ function FormsJoin(props) {
         navigate("/projects");
     }
 
+    const createProject = async (event) => { //createproject
+        event.preventDefault();
+        // alert(JSON.stringify(inputs));
+
+        const requestOptions = {
+            method: "GET"
+        }
+        await fetch("/join/", {  //backend method join 
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            //mode: "cors",
+            body: JSON.stringify({ 'projectId': inputs.projectId})
+        })
+
+        await fetch("/createProj/", requestOptions)   //backend method 
+            .then(response => response.json())
+            .then(authCreate);
+    }
+
+    const authCreate = (data) => {  //checks if user is already in it, if it doesnt exist, makes a new one
+        alert(data.response)
+    }
+
 
     return (
         <form onSubmit={joinButton} style={{ marginTop: 300 }}>
@@ -61,6 +84,9 @@ function FormsJoin(props) {
             </div>
             <div>
                 <button type="button" onClick={viewProjects}>View All Projects</button>
+            </div>
+            <div>
+                <button type="button" onClick={createProject}>Create Project</button>
             </div>
         </ form>
     )

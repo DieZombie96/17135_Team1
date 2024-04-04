@@ -69,6 +69,23 @@ def getter_login():
     print(username, password)
     return '1'
 
+@app.route("/createProj/", methods=["GET"])
+def createProj():
+    returnValue = ""
+    print(pid)
+      
+    project = projects.find_one({'projectid': pid})
+    if project:
+        returnValue = "Project already exists"
+    else:
+        returnValue = "Project created"
+        new={"projectid": pid, "hw1": 0, "hw2": 0}
+        projects.insert_one(new)
+
+    print(returnValue)
+    return json.dumps({'response':returnValue})
+
+
 @app.route("/credentials/", methods=["GET"])
 def lastName():
     print('GET request working')
