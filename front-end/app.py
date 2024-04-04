@@ -92,13 +92,14 @@ def getter_login2():
 def createProj():
     returnValue = ""
     print(pid)
-      
     project = projects.find_one({'projectid': pid})
-    if project:
+    if pid=="" or desc=="":
+        returnValue="Please enter all fields"   
+    elif project:
         returnValue = "Project already exists"
     else:
         returnValue = "Project created"
-        new={"projectid": pid, "hw1": 0, "hw2": 0}
+        new={"projectid": pid, "hw": [0,0],"description":desc}
         projects.insert_one(new)
 
     print(returnValue)
@@ -123,8 +124,22 @@ def lastName():
 def join():
     data = request.json
     global pid
+    pid=''
+    desc=''
     pid = data['projectId']
     print(pid)
+    return '1'
+
+@app.route("/join2/", methods=["POST"])
+def join2():
+    data = request.json
+    global pid
+    global desc
+    pid=''
+    desc=''
+    pid = data['projectId']
+    desc = data['description']
+    desc=desc[:14]
     return '1'
 
 @app.route("/checkProjectId/", methods=["GET"])

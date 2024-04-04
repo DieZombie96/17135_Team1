@@ -48,11 +48,11 @@ function FormsJoin(props) {
         const requestOptions = {
             method: "GET"
         }
-        await fetch("/join/", {  //backend method join 
+        await fetch("/join2/", {  //backend method join 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             //mode: "cors",
-            body: JSON.stringify({ 'projectId': inputs.projectId})
+            body: JSON.stringify({ 'projectId': inputs.projectId, 'description': inputs.description})
         })
 
         await fetch("/createProj/", requestOptions)   //backend method 
@@ -76,6 +76,15 @@ function FormsJoin(props) {
                     type="text"
                     name="projectId"
                     value={inputs.projectId || ""}
+                    onChange={handleChange}
+                />
+            </label>
+            <label>Description:
+                <input
+                    class="mainpage"
+                    type="text"
+                    name="description"
+                    value={inputs.description || ""}
                     onChange={handleChange}
                 />
             </label>
