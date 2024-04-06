@@ -99,7 +99,7 @@ def createProj():
         returnValue = "Project already exists"
     else:
         returnValue = "Project created"
-        new={"projectid": pid, "hw": [0,0],"description":desc}
+        new={"projectid": [pid], "hw": [0,0],"description":desc}
         projects.insert_one(new)
 
     print(returnValue)
@@ -207,21 +207,29 @@ def checkIn_hardware(projectId, qty, type):
     projection = {"capacity": 1}  # Include only the "Availability" field
     result = hardware.find(query, projection)
     hardware1cap = result[0]["capacity"]
-    hardware2cap = result[1]["capacity"]    
+    hardware2cap = result[1]["capacity"]
+    projection = {"projectid": projectId}  # Include only the "Availability" field
+    result = projects.find_one({'projectid': projectId})
+    hw1checkedOut = result['hw'][0]
+    hw2checkedOut = result['hw'][1]
     if type == 1:
-        if (hardware1quant + qty) < hardware1cap:
+        if(qty >= hw1checkedOut):
+            hardware.update_one({'name': 'hardwareset1'}, { "$inc": {'quantity': hw1checkedOut}})
+            projects.update_one({'projectid': projectId}, { "$set": {'hw.0': 0}})
+            return json.dumps({'checkedin': hw1checkedOut})
+        else:
             hardware.update_one({'name': 'hardwareset1'}, { "$inc": {'quantity': qty}})
-            return json.dumps({'checkedin': qty})
-        elif (hardware1quant + qty) >= hardware1cap:
-            hardware.update_one({'name': 'hardwareset1'}, { "$set": {'quantity': hardware1cap}})
-            return json.dumps({'checkedin': (hardware1cap - hardware1quant)})
+            projects.update_one({'projectid': projectId}, { "$set": {'hw.0': (hw1checkedOut-qty)}})
+            return json.dumps({'checkedin': qty})            
     elif type == 2:
-        if (hardware2quant + qty) < hardware2cap:
+        if(qty >= hw2checkedOut):
+            hardware.update_one({'name': 'hardwareset2'}, { "$inc": {'quantity': hw2checkedOut}})
+            projects.update_one({'projectid': projectId}, { "$set": {'hw.0': 0}})
+            return json.dumps({'checkedin': hw1checkedOut})
+        else:
             hardware.update_one({'name': 'hardwareset2'}, { "$inc": {'quantity': qty}})
-            return json.dumps({'checkedin': qty})
-        elif (hardware1quant + qty) >= hardware2cap:
-            hardware.update_one({'name': 'hardwareset2'}, { "$set": {'quantity': hardware2cap}})
-            return json.dumps({'checkedin': (qty - (hardware1cap - hardware1quant))})
+            projects.update_one({'projectid': projectId}, { "$set": {'hw.0': (hw2checkedOut-qty)}})
+            return json.dumps({'checkedin': qty})    
     return json.dumps({'checkedin': 1})
 
 @app.route('/checkout/<int:projectId>/<int:qty>/<int:type>', methods=['GET'])
@@ -238,16 +246,20 @@ def checkOut_hardware(projectId, qty, type):
     if type == 1:
         if (hardware1quant - qty) > 0:
             hardware.update_one({'name': 'hardwareset1'}, { "$set": {'quantity': (hardware1quant - qty)}})
+            projects.update_one({'projectid': projectId}, { "$inc": {'hw.0': qty}})
             return json.dumps({'checkedout': qty})
         elif (hardware1quant - qty) <= 0:
             hardware.update_one({'name': 'hardwareset1'}, { "$set": {'quantity': 0}})
+            projects.update_one({'projectid': projectId}, { "$inc": {'hw.0': qty}})
             return json.dumps({'checkedout': (hardware1quant)})
     elif type == 2:
         if (hardware2quant - qty) > 0:
             hardware.update_one({'name': 'hardwareset2'}, { "$set": {'quantity': (hardware2quant - qty)}})
+            projects.update_one({'projectid': projectId}, { "$inc": {'hw.1': qty}})
             return json.dumps({'checkedout': qty})
         elif (hardware1quant -qty) <= 0:
             hardware.update_one({'name': 'hardwareset2'}, { "$set": {'quantity': 0}})
+            projects.update_one({'projectid': projectId}, { "$inc": {'hw.1': qty}})
             return json.dumps({'checkedout': (hardware2quant)})
     return json.dumps({'checkedout': 1})
 

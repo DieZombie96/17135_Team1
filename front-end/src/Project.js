@@ -31,7 +31,7 @@ class Project extends React.Component {
 
     hardware1in() {
         var input = parseInt(this.state.hardware1input, 10);
-        if(input <= 0){
+        if(input <= 0 || isNaN(input)){
             alert("Please enter a valid quantity");
             return;
         }
@@ -48,7 +48,7 @@ class Project extends React.Component {
     }
 
     hardware1out() {
-        if(this.state.hardware1input <= 0){
+        if(this.state.hardware1input <= 0 ||isNaN(this.state.hardware1input)){
             alert("Please enter a valid quantity");
             return;
         }
@@ -66,7 +66,7 @@ class Project extends React.Component {
 
     hardware2in() {
         var input = parseInt(this.state.hardware2input, 10);
-        if(input <= 0){
+        if(input <= 0|| isNaN(input)){
             alert("Please enter a valid quantity");
             return;
         }
@@ -83,7 +83,7 @@ class Project extends React.Component {
     }
 
     hardware2out() {
-        if(this.state.hardware2input <= 0){
+        if(this.state.hardware2input <= 0|| isNaN(this.state.hardware2input)){
             alert("Please enter a valid quantity");
             return;
         }

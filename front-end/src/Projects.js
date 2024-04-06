@@ -60,7 +60,7 @@ function Projects() {
                 <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project" />
                 <div>
                 <Project project_name="Project Name 1" project_id = {1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
-                <Project project_name="Project Name 2" project_id = {1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
+                <Project project_name="Project Name 2" project_id = {2} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
                 </div>
             </header>
             </div>
