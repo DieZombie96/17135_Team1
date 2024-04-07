@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory,request,json
 from flask_cors import CORS
 import json
 import pymongo
+import os
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
@@ -264,4 +265,5 @@ def checkOut_hardware(projectId, qty, type):
     return json.dumps({'checkedout': 1})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=5000)
+    #app.run(host='0.0.0.0', debug=False, port=5000)
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
