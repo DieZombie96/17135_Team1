@@ -56,6 +56,12 @@ def decrypt(inputText, N, D):
 def index():
     return send_from_directory(app.static_folder, "index.html")
 
+@app.route("/logoff/", methods=["GET"])
+def logoff():
+    username=''
+    userid=''
+    password=''
+
 @app.route("/login/", methods=["POST"])
 def getter_login():
     print('post request working')
