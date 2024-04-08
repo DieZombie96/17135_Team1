@@ -21,6 +21,16 @@ class Project extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.project_quantity1 !== prevProps.project_quantity1) {
+            this.setState({ hardware1quant: this.props.project_quantity1 })
+        }
+        if (this.props.project_quantity2 !== prevProps.project_quantity2) {
+            this.setState({ hardware2quant: this.props.project_quantity2 })
+        }
+    }
+
     hardware1update = (event) => {
         this.setState({ hardware1input: event.target.value });
     }
@@ -39,8 +49,8 @@ class Project extends React.Component {
         fetch(fetchURL)
             .then(response => response.json())
             .then(data => {
-                // alert(data.checkedin + " hardware sets checked in!")
-                this.setState({ hardware1quant: data.checkedin });
+                alert(data.number + " hardware sets checked in!")
+                // this.setState({ hardware1quant: data.checkedin });
                 this.props.refresh();
             })
             .catch(error => {
@@ -57,8 +67,8 @@ class Project extends React.Component {
         fetch(fetchURL)
             .then(response => response.json())
             .then(data => {
-                // alert(data.checkedout + " hardware sets checked out!")
-                this.setState({ hardware1quant: data.checkedout });
+                alert(data.number + " hardware sets checked out!")
+                // this.setState({ hardware1quant: data.checkedout });
                 this.props.refresh();
             })
             .catch(error => {
@@ -76,8 +86,8 @@ class Project extends React.Component {
         fetch(fetchURL)
             .then(response => response.json())
             .then(data => {
-                // alert(data.checkedin + " hardware sets checked in!")
-                this.setState({ hardware2quant: data.checkedin });
+                alert(data.number + " hardware sets checked in!")
+                // this.setState({ hardware2quant: data.checkedin });
                 this.props.refresh();
             })
             .catch(error => {
@@ -94,8 +104,8 @@ class Project extends React.Component {
         fetch(fetchURL)
             .then(response => response.json())
             .then(data => {
-                // alert(data.checkedout + " hardware sets checked out!")
-                this.setState({ hardware2quant: data.checkedout });
+                alert(data.number + " hardware sets checked out!")
+                // this.setState({ hardware2quant: data.checkedout });
                 this.props.refresh();
             })
             .catch(error => {
