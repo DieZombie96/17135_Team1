@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory,request,json
 from flask_cors import CORS
 import json
 import pymongo
+import os
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
@@ -56,6 +57,12 @@ def decrypt(inputText, N, D):
 def index():
     return send_from_directory(app.static_folder, "index.html")
 
+@app.route("/logoff/", methods=["GET"])
+def logoff():
+    username=''
+    userid=''
+    password=''
+
 @app.route("/login/", methods=["POST"])
 def getter_login():
     print('post request working')
@@ -92,14 +99,14 @@ def getter_login2():
 def createProj():
     returnValue = ""
     print(pid)
-    project = projects.find_one({'projectid': pid})
+    project = projects.find_one({'projectid': int(pid)})
     if pid=="" or desc=="":
         returnValue="Please enter all fields"   
     elif project:
         returnValue = "Project already exists"
     else:
         returnValue = "Project created"
-        new={"projectid": [pid], "hw": [0,0],"description":desc}
+        new={"projectid": int(pid), "hw": [0,0],"description":desc}
         projects.insert_one(new)
 
     print(returnValue)
@@ -124,7 +131,7 @@ def lastName():
 def join():
     data = request.json
     global pid
-    pid=''
+    pid=0
     desc=''
     pid = data['projectId']
     print(pid)
@@ -135,7 +142,7 @@ def join2():
     data = request.json
     global pid
     global desc
-    pid=''
+    pid=0
     desc=''
     pid = data['projectId']
     desc = data['description']
@@ -148,13 +155,13 @@ def checkProjectId():
     print(pid)
     user = users.find_one({'userid': userid})
     
-    project = projects.find_one({'projectid': pid})
+    project = projects.find_one({'projectid': int(pid)})
     if project:
         returnValue = "Success"
-        if pid in user['resources']:
+        if int(pid) in user['resources']:
             returnValue = "Already joined"
         else:
-            users.update_one({'userid': userid}, { "$push": {'resources': pid}})
+            users.update_one({'userid': userid}, { "$push": {'resources': int(pid)}})
     else:
         returnValue = "Project does not exist"
 
@@ -264,4 +271,5 @@ def checkOut_hardware(projectId, qty, type):
     return json.dumps({'checkedout': 1})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=5000)
+    #app.run(host='0.0.0.0', debug=False, port=5000)
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))

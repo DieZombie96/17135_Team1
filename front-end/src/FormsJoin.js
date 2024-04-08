@@ -13,6 +13,26 @@ function FormsJoin(props) {
 
     }
 
+    const Logoff = async (event) => { //logoff
+        event.preventDefault();
+        // alert(JSON.stringify(inputs));
+
+        const requestOptions = {
+            method: "GET"
+        }
+
+        await fetch("/logoff/", {  //logoff
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            //mode: "cors",
+          
+        })
+        navigate("/");
+
+
+       
+    }
+
     const joinButton = async (event) => { //join button
         event.preventDefault();
         // alert(JSON.stringify(inputs));
@@ -67,6 +87,7 @@ function FormsJoin(props) {
 
     return (
         <form onSubmit={joinButton} style={{ marginTop: 300 }}>
+            <button type="button" onClick={Logoff} style={{ position: "absolute", top: "10px", right: "10px" }}>Logoff</button>
             <div>
                  <header ><b>Join Project</b> </header>
             </div>
@@ -97,6 +118,7 @@ function FormsJoin(props) {
             <div>
                 <button type="button" onClick={createProject}>Create Project</button>
             </div>
+          
         </ form>
     )
 }
