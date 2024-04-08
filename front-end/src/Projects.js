@@ -6,6 +6,7 @@ import CustomButton from "./CustomButton";
 import { useEffect, useState } from "react";
 
 function Projects() {
+
     const navigate = useNavigate();
     const goBack = () => {
         navigate("/join");
@@ -39,9 +40,7 @@ function Projects() {
     // }, [])
 
     const rerender = () => {
-        // alert("rerendering")
-        // this.forceUpdate()
-        // sethard1cap(1)
+        // alert('yes')
     };
 
     const getprojects = (data) => {
@@ -54,50 +53,63 @@ function Projects() {
         // alert(projects)
     }
 
-    if (list.includes('2')) {
-        return (
-            <div>
-                <header className="App-header">
-                    <b>PROJECTS</b>
-                    <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project" />
-                    <div>
-                        <Project project_name="Project Name 1" project_id={1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
-                        <Project project_name="Project Name 2" project_id={2} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
-                    </div>
-                </header>
-            </div>
-        );
-    }
-    else if (list.includes('1')) {
-        return (
-            <div>
-                <header className="App-header"><b>PROJECTS</b>
-                    <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project"> </CustomButton>
-                    <div>
+    // if (list.includes('2')) {
+    //     return (
+    //         <div>
+    //             <header className="App-header">
+    //                 <b>PROJECTS</b>
+    //                 <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project" />
+    //                 <div>
+    //                     <Project project_name="Project Name 1" project_id={1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
+    //                     <Project project_name="Project Name 2" project_id={2} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
+    //                 </div>
+    //             </header>
+    //         </div>
+    //     );
+    // }
+    // else if (list.includes('1')) {
+    //     return (
+    //         <div>
+    //             <header className="App-header"><b>PROJECTS</b>
+    //                 <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project"> </CustomButton>
+    //                 <div>
 
-                        <Project project_name="Project Name 1" project_id={1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} project_users={["list", "of", "valid", "users"]} />
-                    </div>
-                </header>
-            </div>
-        );
+    //                     <Project project_name="Project Name 1" project_id={1} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} project_users={["list", "of", "valid", "users"]} />
+    //                 </div>
+    //             </header>
+    //         </div>
+    //     );
 
-    }
-    else {
-        return (
-            <div>
-                <header className="App-header"><b>PROJECTS</b>
-                    <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project"> </CustomButton>
-                    <div>
-                        {/* 
-                        <Project project_name="Project Name 1" project_quantity={100} project_users={["list", "of", "valid", "users"]} />
-                        <Project project_name="Project Name 2" project_quantity={100} project_users={["list", "of", "valid", "users"]} />
-                        <Project project_name="Project Name 3" project_quantity={100} project_users={["list", "of", "valid", "users"]} /> */}
-                    </div>
-                </header>
-            </div>
-        );
+    // }
+    // else {
+    //     return (
+    //         <div>
+    //             <header className="App-header"><b>PROJECTS</b>
+    //                 <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project"> </CustomButton>
+    //                 <div>
+    //                     {/* 
+    //                     <Project project_name="Project Name 1" project_quantity={100} project_users={["list", "of", "valid", "users"]} />
+    //                     <Project project_name="Project Name 2" project_quantity={100} project_users={["list", "of", "valid", "users"]} />
+    //                     <Project project_name="Project Name 3" project_quantity={100} project_users={["list", "of", "valid", "users"]} /> */}
+    //                 </div>
+    //             </header>
+    //         </div>
+    //     );
 
-    }
+    // }
+
+    return (
+        <div>
+            <header className="App-header"><b>PROJECTS</b>
+                <CustomButton disabled={false} clicked={goBack} width={125} fontsize={14} name="Join Project"> </CustomButton>
+                <div>
+                    {list.map((project) => (
+                        <Project project_name="Project Name 1" project_id={project} refresh={rerender} project_capacity1={hard1cap} project_capacity2={hard2cap} project_quantity1={hard1quant} project_quantity2={hard2quant} />
+                    ))}
+                </div>
+            </header>
+        </div>
+    )
 
 
 }

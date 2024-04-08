@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/join" element={<FormsJoin/>} />
+        <Route path="/join" element={<FormsJoin />} />
         <Route path="/projects" element={<Projects />} />
       </Routes>
       {/* <Login /> */}
